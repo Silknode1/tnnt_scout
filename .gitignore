@@ -33,6 +33,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+TYPESAFE_API_KEY="apikey_2135ef39670b34fc4354875dd8fdde368ef7_3c04b36459a9df1256c0805d6e41f8faa43a333ee0ad3bb5adbe1abfe90448a7”
 
 # vercel
 .vercel
