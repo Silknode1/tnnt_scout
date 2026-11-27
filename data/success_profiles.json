@@ -1,0 +1,274 @@
+{
+ "built": "2026-11-16",
+ "basis": "Repos featured on The Next New Thing (repos.json, is_new=false). \"Repeat\" = featured in 2+ episodes.",
+ "overall": {
+  "repeat_n": 105,
+  "single_n": 217,
+  "median_stars_per_day": {
+   "repeat": 183.9,
+   "single": 31.5
+  },
+  "median_age_days": {
+   "repeat": 286,
+   "single": 292
+  },
+  "median_fork_ratio": {
+   "repeat": 0.106,
+   "single": 0.113
+  }
+ },
+ "categories": {
+  "Learning resources & lists": {
+   "n": 17,
+   "median_stars_per_day": 63.3,
+   "median_fork_ratio": 0.121,
+   "share_licensed": 0.47,
+   "share_pushed_last_30d": 0.71,
+   "median_age_days": 596,
+   "share_featured_2plus": 0.12,
+   "top_examples": [
+    "asgeirtj/system_prompts_leaks",
+    "rohitg00/ai-engineering-from-scratch",
+    "public-apis/public-apis"
+   ]
+  },
+  "Coding agents & dev tools": {
+   "n": 38,
+   "median_stars_per_day": 38.5,
+   "median_fork_ratio": 0.108,
+   "share_licensed": 0.82,
+   "share_pushed_last_30d": 0.89,
+   "median_age_days": 252.0,
+   "share_featured_2plus": 0.26,
+   "top_examples": [
+    "morluto/rea",
+    "anthropics/claude-code",
+    "alibaba/open-code-review"
+   ]
+  },
+  "Agent skills & plugins": {
+   "n": 38,
+   "median_stars_per_day": 90.3,
+   "median_fork_ratio": 0.099,
+   "share_licensed": 0.79,
+   "share_pushed_last_30d": 0.82,
+   "median_age_days": 261.5,
+   "share_featured_2plus": 0.47,
+   "top_examples": [
+    "mattpocock/skills",
+    "affaan-m/ECC",
+    "addyosmani/agent-skills"
+   ]
+  },
+  "Agent frameworks & orchestration": {
+   "n": 23,
+   "median_stars_per_day": 106.7,
+   "median_fork_ratio": 0.132,
+   "share_licensed": 0.91,
+   "share_pushed_last_30d": 0.87,
+   "median_age_days": 255,
+   "share_featured_2plus": 0.39,
+   "top_examples": [
+    "NousResearch/hermes-agent",
+    "stablyai/orca",
+    "paperclipai/paperclip"
+   ]
+  },
+  "Personal productivity & utilities": {
+   "n": 20,
+   "median_stars_per_day": 63.1,
+   "median_fork_ratio": 0.106,
+   "share_licensed": 0.85,
+   "share_pushed_last_30d": 0.95,
+   "median_age_days": 215.0,
+   "share_featured_2plus": 0.3,
+   "top_examples": [
+    "ai-job-search-dev/ai-job-search",
+    "omacom/omarchy",
+    "Gathin23/cleanyourtv"
+   ]
+  },
+  "Browser automation & scraping": {
+   "n": 10,
+   "median_stars_per_day": 129.5,
+   "median_fork_ratio": 0.089,
+   "share_licensed": 1.0,
+   "share_pushed_last_30d": 0.9,
+   "median_age_days": 542.5,
+   "share_featured_2plus": 0.4,
+   "top_examples": [
+    "Panniantong/Agent-Reach",
+    "D4Vinci/Scrapling",
+    "vercel-labs/agent-browser"
+   ]
+  },
+  "Memory, context & knowledge": {
+   "n": 28,
+   "median_stars_per_day": 75.0,
+   "median_fork_ratio": 0.089,
+   "share_licensed": 0.86,
+   "share_pushed_last_30d": 0.93,
+   "median_age_days": 258.5,
+   "share_featured_2plus": 0.25,
+   "top_examples": [
+    "thedotmack/claude-mem",
+    "microsoft/markitdown",
+    "Graphify-Labs/graphify"
+   ]
+  },
+  "Video, image & 3D generation": {
+   "n": 24,
+   "median_stars_per_day": 43.7,
+   "median_fork_ratio": 0.116,
+   "share_licensed": 0.79,
+   "share_pushed_last_30d": 0.83,
+   "median_age_days": 385.0,
+   "share_featured_2plus": 0.29,
+   "top_examples": [
+    "harry0703/MoneyPrinterTurbo",
+    "heygen-com/hyperframes",
+    "OpenCut-app/OpenCut"
+   ]
+  },
+  "Design & UI": {
+   "n": 17,
+   "median_stars_per_day": 95.0,
+   "median_fork_ratio": 0.077,
+   "share_licensed": 1.0,
+   "share_pushed_last_30d": 1.0,
+   "median_age_days": 270,
+   "share_featured_2plus": 0.41,
+   "top_examples": [
+    "pbakaus/impeccable",
+    "Leonxlnx/taste-skill",
+    "tt-a1i/archify"
+   ]
+  },
+  "Self-hosted business apps": {
+   "n": 20,
+   "median_stars_per_day": 13.4,
+   "median_fork_ratio": 0.152,
+   "share_licensed": 0.6,
+   "share_pushed_last_30d": 1.0,
+   "median_age_days": 1785.0,
+   "share_featured_2plus": 0.35,
+   "top_examples": [
+    "calcom/cal.diy",
+    "immich-app/immich",
+    "AppFlowy-IO/AppFlowy"
+   ]
+  },
+  "Finance & trading": {
+   "n": 10,
+   "median_stars_per_day": 73.4,
+   "median_fork_ratio": 0.149,
+   "share_licensed": 0.8,
+   "share_pushed_last_30d": 0.6,
+   "median_age_days": 349.5,
+   "share_featured_2plus": 0.4,
+   "top_examples": [
+    "anthropics/financial-services",
+    "TauricResearch/TradingAgents",
+    "ZhuLinsen/daily_stock_analysis"
+   ]
+  },
+  "Token & cost savers": {
+   "n": 14,
+   "median_stars_per_day": 1.5,
+   "median_fork_ratio": 0.091,
+   "share_licensed": 0.86,
+   "share_pushed_last_30d": 0.79,
+   "median_age_days": 219.0,
+   "share_featured_2plus": 0.29,
+   "top_examples": [
+    "headroomlabs-ai/headroom",
+    "mksglu/context-mode",
+    "teamchong/pxpipe"
+   ]
+  },
+  "OSINT & research data": {
+   "n": 7,
+   "median_stars_per_day": 40.2,
+   "median_fork_ratio": 0.115,
+   "share_licensed": 0.86,
+   "share_pushed_last_30d": 0.71,
+   "median_age_days": 951,
+   "share_featured_2plus": 0.43,
+   "top_examples": [
+    "mvanhorn/last30days-skill",
+    "bilawalsidhu/gods-eye-view",
+    "koala73/worldmonitor"
+   ]
+  },
+  "Voice & audio": {
+   "n": 13,
+   "median_stars_per_day": 33.9,
+   "median_fork_ratio": 0.126,
+   "share_licensed": 1.0,
+   "share_pushed_last_30d": 0.69,
+   "median_age_days": 221,
+   "share_featured_2plus": 0.38,
+   "top_examples": [
+    "altic-dev/FluidVoice",
+    "debpalash/VoiceStudio",
+    "jamiepine/voicebox"
+   ]
+  },
+  "Robotics, vision & world models": {
+   "n": 5,
+   "median_stars_per_day": 18.0,
+   "median_fork_ratio": 0.121,
+   "share_licensed": 0.8,
+   "share_pushed_last_30d": 0.6,
+   "median_age_days": 527,
+   "share_featured_2plus": 0.2,
+   "top_examples": [
+    "ruvnet/RuView",
+    "Robbyant/lingbot-map",
+    "google-deepmind/mujoco"
+   ]
+  },
+  "Security": {
+   "n": 11,
+   "median_stars_per_day": 35.6,
+   "median_fork_ratio": 0.093,
+   "share_licensed": 0.82,
+   "share_pushed_last_30d": 0.82,
+   "median_age_days": 1922,
+   "share_featured_2plus": 0.18,
+   "top_examples": [
+    "cloudflare/security-audit-skill",
+    "NVIDIA/SkillSpector",
+    "NationalSecurityAgency/ghidra"
+   ]
+  },
+  "Model gateways & local AI": {
+   "n": 11,
+   "median_stars_per_day": 42.5,
+   "median_fork_ratio": 0.142,
+   "share_licensed": 0.82,
+   "share_pushed_last_30d": 0.91,
+   "median_age_days": 276,
+   "share_featured_2plus": 0.36,
+   "top_examples": [
+    "tashfeenahmed/freellmapi",
+    "cheaper-inference/OmniRoute",
+    "odysseus-dev/odysseus"
+   ]
+  },
+  "Marketing, SEO & content": {
+   "n": 16,
+   "median_stars_per_day": 16.9,
+   "median_fork_ratio": 0.143,
+   "share_licensed": 0.81,
+   "share_pushed_last_30d": 1.0,
+   "median_age_days": 303.5,
+   "share_featured_2plus": 0.31,
+   "top_examples": [
+    "every-app/open-seo",
+    "gitroomhq/postiz-app",
+    "coreyhaines31/marketingskills"
+   ]
+  }
+ }
+}

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Every GitHub repo featured on The Next New Thing, labeled and searchable, plus new finds from a daily scout.">
+<title>Next New Thing Repo Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: masthead + category trend bars, then a sticky filter bar over a dense, sortable repo ledger (cards on phones). */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#15181d; --muted:#5b6370; --line:#e1e4ea;
+  --accent:#c8641a; --accent-soft:#fbeee3; --new:#1f7a5a; --new-soft:#e3f3ec; --star:#b7791f;
+  --bar:#2b3a55; --chip:#eef1f5;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1216; --panel:#161a20; --ink:#e8ebf0; --muted:#98a1ae; --line:#2a303a;
+  --accent:#f0924a; --accent-soft:#3a2617; --new:#5cc79c; --new-soft:#14301f; --star:#e3b04b;
+  --bar:#8aa3cf; --chip:#222833; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --ink:#e8ebf0; --muted:#98a1ae; --line:#2a303a;
+  --accent:#f0924a; --accent-soft:#3a2617; --new:#5cc79c; --new-soft:#14301f; --star:#e3b04b;
+  --bar:#8aa3cf; --chip:#222833; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.5vw,44px);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-0.01em}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.lede{color:var(--muted);max-width:68ch;margin:12px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:28px;margin:22px 0 6px}
+.stat b{display:block;font-family:var(--display);font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;margin-top:22px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.panel h2{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 12px}
+.bars{display:flex;flex-direction:column;gap:7px}
+.barrow{display:grid;grid-template-columns:minmax(0,13.5em) minmax(0,1fr) 3.2em;gap:10px;align-items:center;font-size:13px;cursor:pointer;background:none;border:0;padding:2px 0;color:inherit;text-align:left;font-family:inherit}
+.barrow:hover .lbl,.barrow:focus-visible .lbl{color:var(--accent)}
+.barrow:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:12px;background:var(--chip);border-radius:3px;position:relative;overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--bar);border-radius:3px}
+.fill.newf{background:var(--new);opacity:.85}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.trends{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:9px}
+.trends li{max-width:62ch}
+.trends b{font-weight:600}
+.note{font-size:12px;color:var(--muted);margin-top:12px}
+.filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 10px;margin-top:26px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.f input,.f select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 9px;min-width:0}
+.f input:focus-visible,.f select:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#q{width:min(320px,100%)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;border:0;background:none;color:var(--muted);padding:7px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.count{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.clear{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;padding:7px 4px;text-decoration:underline}
+.ledger{margin-top:8px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);text-align:left;font-weight:600;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:var(--ink)}
+th .arr{font-family:var(--mono)}
+td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.isnew td:first-child{box-shadow:inset 3px 0 0 var(--new)}
+.repo a{font-family:var(--mono);font-weight:600;color:var(--ink);text-decoration:none;word-break:break-word}
+.repo a:hover{color:var(--accent);text-decoration:underline}
+.alias{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;margin-top:4px;white-space:nowrap}
+.b-new{background:var(--new-soft);color:var(--new)}
+.b-name{background:var(--chip);color:var(--muted)}
+.b-gone{background:var(--accent-soft);color:var(--accent)}
+.cat{display:inline-block;font-size:12px;background:var(--chip);border-radius:5px;padding:2px 7px;white-space:nowrap}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.tag{font-family:var(--mono);font-size:11px;color:var(--muted);background:none;border:1px solid var(--line);border-radius:4px;padding:0 5px;cursor:pointer}
+.tag:hover{border-color:var(--accent);color:var(--accent)}
+.sum{max-width:52ch}
+.why{font-size:12.5px;color:var(--new);margin-top:6px}
+.repl{font-size:12px;color:var(--muted);margin-top:4px}
+.stars{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.stars::before{content:"★ ";color:var(--star)}
+.mono{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--muted)}
+details summary{cursor:pointer;color:var(--muted);font-size:12.5px;white-space:nowrap}
+details ul{margin:6px 0 0;padding-left:16px;font-size:12.5px;min-width:16em}
+details li{margin-bottom:3px}
+details a{color:var(--ink)}
+.empty{padding:40px 10px;text-align:center;color:var(--muted)}
+.foot{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:80ch}
+.foot p{margin:0 0 8px}
+@media (max-width:720px){
+  table{min-width:0}
+  thead{display:none}
+  tr{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  td{border:0;padding:2px 0}
+  td.c-repo{grid-column:1}
+  td.c-stars{grid-column:2;grid-row:1}
+  td.c-cat,td.c-sum,td.c-ep{grid-column:1 / -1}
+  td.c-feat,td.c-push{grid-column:1 / -1}
+  td.c-feat::before{content:"Featured ";color:var(--muted)}
+  td.c-push::before{content:"Last push ";color:var(--muted)}
+  tr.isnew td:first-child{box-shadow:none}
+  tr.isnew{box-shadow:inset 3px 0 0 var(--new);padding-left:10px}
+  .count{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:no-preference){.fill{transition:width .3s ease}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="eyebrow">The Next New Thing · GitHub repo index</div>
+  <h1>Every repo the show featured, plus 30 it hasn't yet</h1>
+  <p class="lede">Built from the "Repos featured" lists and chapter titles of __NVIDEOS__ episodes of Andrew Warner's YouTube show, matched to GitHub on __ASOF__. Stars, licenses and last-push dates come from GitHub that day. Click a category bar or a tag to filter.</p>
+  <div class="stats">
+    <div class="stat"><b>__NCOVERED__</b><span>Repos featured</span></div>
+    <div class="stat"><b>__NEPS__</b><span>Episodes with repos</span></div>
+    <div class="stat"><b>__NREPEAT__</b><span>Featured 2+ times</span></div>
+    <div class="stat"><b>__NNEW__</b><span>New finds</span></div>
+  </div>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="h-cats">
+      <h2 id="h-cats">Repos by category</h2>
+      <div class="bars" id="bars"></div>
+      <div class="legend"><span><i class="sw" style="background:var(--bar)"></i>Featured on the show</span><span><i class="sw" style="background:var(--new)"></i>New finds</span></div>
+    </section>
+    <section class="panel" aria-labelledby="h-trends">
+      <h2 id="h-trends">What the show keeps coming back to</h2>
+      <ul class="trends"><li><b>Agent skills are the show's biggest beat, and growing.</b> Skills and plugins were featured 45 times since September, against 17 in April to June. Matt Pocock's skills repo alone came up in 10 episodes.</li><li><b>Running many agents at once beats single agents.</b> Orchestration tools like Orca, Paperclip, T3 Code and Hermes Agent recur more than any one coding agent does.</li><li><b>"Replace a paid tool" drives the picks.</b> Voice (VoiceStudio, FluidVoice), video generation (MoneyPrinterTurbo, HyperFrames) and self-hosted apps all jumped after the subscription-killer episodes started in August. Video and image tools went from 7 features in spring to 20 since September.</li><li><b>Token savers show up often but are early.</b> They were featured 22 times, yet the median one has about 450 stars. Treat them as experiments.</li><li><b>Most of the big names are brand new.</b> 25 repos created since April already have 30k+ stars, including REA, Ponytail, Graphify and Caveman. Star counts this high this fast can be inflated, which the show itself discussed.</li><li><b>Gaps the new finds fill:</b> local model runtimes, evals and observability, real-time voice agents, workflow automation, home automation and 3D printing, plus open alternatives to the most-covered memory, document and coding-agent repos.</li></ul>
+    </section>
+  </div>
+
+  <div class="filters" role="search">
+    <div class="f"><label for="q">Search</label><input id="q" type="search" placeholder="Name, summary, tag…" autocomplete="off"></div>
+    <div class="f"><label for="cat">Category</label><select id="cat"><option value="">All categories</option></select></div>
+    <div class="f"><label for="tag">Tag</label><select id="tag"><option value="">All tags</option></select></div>
+    <div class="f"><label for="ep">Episode</label><select id="ep" style="max-width:260px"><option value="">All episodes</option></select></div>
+    <div class="f"><label for="minstars">Min stars</label><select id="minstars"><option value="0">Any</option><option value="1000">1k+</option><option value="10000">10k+</option><option value="50000">50k+</option><option value="100000">100k+</option></select></div>
+    <div class="f"><label id="lbl-show">Show</label><div class="seg" role="group" aria-labelledby="lbl-show"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="covered" aria-pressed="false">Featured</button><button type="button" data-v="new" aria-pressed="false">New finds</button></div></div>
+    <button class="clear" id="clear" type="button">Reset</button>
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+
+  <div class="ledger">
+    <table>
+      <thead><tr>
+        <th class="sortable" data-k="slug">Repo <span class="arr"></span></th>
+        <th class="sortable" data-k="category">Category <span class="arr"></span></th>
+        <th>What it does</th>
+        <th class="sortable" data-k="stars" style="text-align:right">Stars <span class="arr"></span></th>
+        <th class="sortable" data-k="times_featured">Featured <span class="arr"></span></th>
+        <th class="sortable" data-k="last_push">Last push <span class="arr"></span></th>
+        <th>Episodes</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>No repos match these filters. Try Reset.</div>
+  </div>
+
+  <div class="foot"><p>How this was built: every upload on the channel's Videos tab (191) was read through a YouTube data provider. GitHub links in the "Repos featured" lists were taken as given. For 18 episodes (April to early August) that name repos only in chapter titles, each name was matched to GitHub by search; those rows carry a "Matched by name" badge. 10 names could not be matched (Omni, Android Reverse Engineering, Claude Code Context Map, AI Slop Remover, Webwright, Agent Cookie, ElgoLite, Tweaker, Ion Jarvis, Mission Control) and are left out.</p><p>Gaps: the show's Resources page keeps each week's full list behind an email sign-up, so it was not used. The 17 oldest uploads (9 to 12 months ago, mostly founder interviews before the repo series began) could not be read before the data provider ran out of credits. Transcripts were not used, so a repo mentioned only in conversation is missing. Shorts and live streams are not included.</p><p>Repos that moved since the episode aired show "Linked as" with the old name; 4 linked repos are no longer on GitHub. Summaries are written from each repo's GitHub description, not from testing it.</p></div>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+  const DATA = JSON.parse(document.getElementById('data').textContent);
+  const $ = s => document.querySelector(s);
+  const state = {q:'',cat:'',tag:'',ep:'',min:0,show:'all',sort:'stars',dir:-1};
+  const fmt = n => n==null ? '–' : n>=1000 ? (n/1000).toFixed(n>=100000?0:1).replace(/\.0$/,'')+'k' : String(n);
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  // category bars
+  const cats = {};
+  DATA.forEach(r => { const c = cats[r.category] || (cats[r.category] = {cov:0,nw:0}); r.is_new ? c.nw++ : c.cov++; });
+  const catList = Object.entries(cats).sort((a,b) => (b[1].cov+b[1].nw)-(a[1].cov+a[1].nw));
+  const maxC = Math.max(...catList.map(([,v]) => v.cov+v.nw));
+  $('#bars').innerHTML = catList.map(([k,v]) =>
+    `<button class="barrow" type="button" data-cat="${esc(k)}" aria-label="Filter to ${esc(k)}, ${v.cov} featured, ${v.nw} new"><span class="lbl">${esc(k)}</span>
+      <span class="track"><span class="fill" style="width:${(v.cov+v.nw)/maxC*100}%"></span><span class="fill newf" style="left:${v.cov/maxC*100}%;width:${v.nw/maxC*100}%"></span></span>
+      <span class="num">${v.cov}${v.nw?'+'+v.nw:''}</span></button>`).join('');
+  document.querySelectorAll('.barrow').forEach(b => b.addEventListener('click', () => { state.cat = b.dataset.cat; $('#cat').value = state.cat; render(); $('.filters').scrollIntoView({behavior:'smooth'}); }));
+
+  // filter options
+  catList.forEach(([k]) => $('#cat').insertAdjacentHTML('beforeend', `<option>${esc(k)}</option>`));
+  const tagCount = {};
+  DATA.forEach(r => (r.tags||[]).forEach(t => tagCount[t] = (tagCount[t]||0)+1));
+  Object.keys(tagCount).filter(t => tagCount[t] >= 2).sort().forEach(t => $('#tag').insertAdjacentHTML('beforeend', `<option value="${esc(t)}">${esc(t)} (${tagCount[t]})</option>`));
+  const eps = {};
+  DATA.forEach(r => (r.episodes||[]).forEach(e => eps[e.video_id] = e));
+  Object.values(eps).sort((a,b) => b.date.localeCompare(a.date)).forEach(e => $('#ep').insertAdjacentHTML('beforeend', `<option value="${e.video_id}">${e.date} · ${esc(e.title.slice(0,60))}</option>`));
+
+  function matches(r){
+    if (state.show==='covered' && r.is_new) return false;
+    if (state.show==='new' && !r.is_new) return false;
+    if (state.cat && r.category!==state.cat) return false;
+    if (state.tag && !(r.tags||[]).includes(state.tag)) return false;
+    if (state.ep && !(r.episodes||[]).some(e => e.video_id===state.ep)) return false;
+    if ((r.stars||0) < state.min) return false;
+    if (state.q){
+      const hay = [r.slug, r.summary, r.description, (r.labels||[]).join(' '), (r.tags||[]).join(' '), r.category, r.replaces, r.why_fit].join(' ').toLowerCase();
+      if (!state.q.split(/\s+/).every(w => hay.includes(w))) return false;
+    }
+    return true;
+  }
+  function row(r){
+    const badges = [];
+    if (r.is_new) badges.push('<span class="badge b-new">New find</span>');
+    if (!r.is_new && r.link_source && r.link_source.startsWith('chapter')) badges.push('<span class="badge b-name" title="The episode named this repo but did not link it; matched by name on GitHub">Matched by name</span>');
+    if (r.found_on_github===false) badges.push('<span class="badge b-gone">Not on GitHub now</span>');
+    const alias = (r.labels||[]).filter(l => l && l.toLowerCase()!==r.slug.split('/')[1].toLowerCase()).slice(0,1);
+    const moved = (r.moved_from||[]).length ? `<div class="alias">Linked as ${esc(r.moved_from[0])}</div>` : '';
+    const eps = (r.episodes||[]);
+    const epHtml = r.is_new ? '<span class="dim">Not covered yet</span>' :
+      `<details><summary>${eps.length} episode${eps.length>1?'s':''}</summary><ul>${eps.map(e => `<li><a href="${e.url}" target="_blank" rel="noopener">${e.date}</a> ${esc(e.title)}</li>`).join('')}</ul></details>`;
+    return `<tr class="${r.is_new?'isnew':''}">
+      <td class="c-repo repo"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.slug)}</a>${alias.length?`<div class="alias">${esc(alias[0])}</div>`:''}${moved}<div>${badges.join(' ')}</div></td>
+      <td class="c-cat"><span class="cat">${esc(r.category)}</span><div class="tags">${(r.tags||[]).map(t => `<button class="tag" type="button" data-tag="${esc(t)}">${esc(t)}</button>`).join('')}</div></td>
+      <td class="c-sum"><div class="sum">${esc(r.summary||r.description||'')}</div>${r.replaces?`<div class="repl">Free alternative to ${esc(r.replaces)}</div>`:''}${r.why_fit?`<div class="why">Why it fits: ${esc(r.why_fit)}</div>`:''}</td>
+      <td class="c-stars stars">${fmt(r.stars)}</td>
+      <td class="c-feat mono">${r.is_new?'<span class="dim">–</span>':r.times_featured+'×'}</td>
+      <td class="c-push mono">${r.last_push?esc(r.last_push):'<span class="dim">–</span>'}</td>
+      <td class="c-ep">${epHtml}</td></tr>`;
+  }
+  function render(){
+    let list = DATA.filter(matches);
+    const k = state.sort, d = state.dir;
+    list.sort((a,b) => { const x=a[k], y=b[k]; if (x==null) return 1; if (y==null) return -1; return (typeof x==='string' ? x.localeCompare(y) : x-y)*d || (b.stars||0)-(a.stars||0); });
+    $('#rows').innerHTML = list.map(row).join('');
+    $('#empty').hidden = list.length>0;
+    $('#count').textContent = `${list.length} of ${DATA.length} repos`;
+    document.querySelectorAll('th.sortable').forEach(th => th.querySelector('.arr').textContent = th.dataset.k===k ? (d<0?'↓':'↑') : '');
+    document.querySelectorAll('.tag').forEach(b => b.addEventListener('click', () => { state.tag = b.dataset.tag; $('#tag').value = state.tag; render(); }));
+  }
+  $('#q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); render(); });
+  $('#cat').addEventListener('change', e => { state.cat = e.target.value; render(); });
+  $('#tag').addEventListener('change', e => { state.tag = e.target.value; render(); });
+  $('#ep').addEventListener('change', e => { state.ep = e.target.value; render(); });
+  $('#minstars').addEventListener('change', e => { state.min = +e.target.value; render(); });
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    state.show = b.dataset.v; document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x===b)); render(); }));
+  document.querySelectorAll('th.sortable').forEach(th => th.addEventListener('click', () => {
+    if (state.sort===th.dataset.k) state.dir*=-1; else { state.sort=th.dataset.k; state.dir = (th.dataset.k==='slug'||th.dataset.k==='category') ? 1 : -1; } render(); }));
+  $('#clear').addEventListener('click', () => {
+    Object.assign(state,{q:'',cat:'',tag:'',ep:'',min:0,show:'all'});
+    ['#q','#cat','#tag','#ep'].forEach(s => $(s).value=''); $('#minstars').value='0';
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x.dataset.v==='all')); render(); });
+  render();
+})();
+</script>
+
+</body>
+</html>
