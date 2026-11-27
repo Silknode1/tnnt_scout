@@ -1,0 +1,33 @@
+name: repo-scout
+on:
+  schedule:
+    - cron: "0 13 * * *"      # 7am Central (13:00 UTC) daily
+  workflow_dispatch: {}        # "Run workflow" button for manual runs
+permissions:
+  contents: write              # commit the updated database and digest
+concurrency:
+  group: repo-scout
+  cancel-in-progress: false
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run scout
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+        run: python scout/scout.py
+      - name: Commit results
+        run: |
+          git config user.name "repo-scout"
+          git config user.email "repo-scout@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Scout run $(date -u +%F)"
+          git push
