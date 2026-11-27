@@ -20687,6 +20687,51 @@
    "why_fit": "Scout score 0.709 (momentum 0.046, upkeep 1.0, license 1.0, fit 0.823, maturity 0.997, type_checks 0.917)",
    "discovery_type": "Scout",
    "found_on": "2026-11-27"
+  },
+  {
+   "slug": "EL4CTEO/shrink-anything",
+   "url": "https://github.com/EL4CTEO/shrink-anything",
+   "labels": [],
+   "moved_from": [],
+   "link_source": "scout",
+   "found_on_github": true,
+   "description": "Less code, same tests passing: delete the dead code, files, dependencies and assets in any codebase, and keep each cut only if your own tests still pass.",
+   "stars": 374,
+   "forks": 21,
+   "language": "Rust",
+   "license": "MIT",
+   "topics": [
+    "ai-agents",
+    "bundle-size",
+    "claude-code",
+    "cli",
+    "code-cleanup",
+    "dead-code",
+    "mcp",
+    "refactoring",
+    "rust",
+    "unused-dependencies"
+   ],
+   "last_push": "2026-11-25",
+   "created": "2026-11-23",
+   "archived": false,
+   "homepage": null,
+   "times_featured": 0,
+   "first_featured": null,
+   "episodes": [],
+   "category": "Coding agents & dev tools",
+   "tags": [
+    "ai-agents",
+    "bundle-size",
+    "claude-code",
+    "cli"
+   ],
+   "summary": "Less code, same tests passing: delete the dead code, files, dependencies and assets in any codebase, and keep each cut only if your own tests still pass.",
+   "replaces": null,
+   "is_new": true,
+   "why_fit": "Scout score 0.756 (momentum 0.202, upkeep 1.0, license 1.0, fit 0.867, maturity 0.997, type_checks 0.913)",
+   "discovery_type": "Scout",
+   "found_on": "2026-11-27"
   }
  ]
 }
